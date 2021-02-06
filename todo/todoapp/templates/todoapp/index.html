@@ -3,16 +3,18 @@
 <h1>Items</h1>
 <ul class="form-check">
     {% for item in items %}
-        <li>
+        
             {% if not item.done %}
+            <li>
                 <form action="{% url 'todoapp:remove' item.id %}" method="post">      
                     {% csrf_token %}      
-                    <!-- <input class="form-check-input" type="checkbox" name="item" id="item{{ forloop.counter }}" value="{{ item.id }}"> -->
-                    <input type="submit" value="Delete">
+                    <!-- <input class="form-check-input" type="checkbox submit" name="item" id="item{{ forloop.counter }}" value="{{ item.id }}"> -->
+                    <input class="form-check-input" type="checkbox" id="item{{ forloop.counter }}"/>
+                    <!-- <input type="submit" value="Delete"> -->
                 </form>
                 <label class="form-check-label" for="item{{ forloop.counter }}">{{ item.text }}</label>
+            </li>
             {% endif %}
-        </li>
         
     {% endfor %}
 
