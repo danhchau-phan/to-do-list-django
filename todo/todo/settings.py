@@ -121,4 +121,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/todoapp/index/'
+LOGIN_REDIRECT_URL = '/todoapp/index'
+

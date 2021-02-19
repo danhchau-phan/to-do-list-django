@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Add task</h1>
+<form method="post">
+    {% csrf_token %}
+    <label>Task description</label>
+    <input name="new_task"/>
+    
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect">Assign to</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect" name="assignee">
+          <option selected></option>
+          {% for user in users %}
+            <option>{{ user.username }}</option>
+          {% endfor %}
+        </select>
+    </div>
+
+    <label>Deadline</label>
+    <input type="date" name="deadline"/>
+
+    <input type="submit"/>
+</form>
+<a href="{% url 'todoapp:index' %}"><button>My tasks</button></a>
+{% endblock %}

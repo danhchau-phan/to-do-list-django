@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Items</h1>
+<h1>Tasks of {{user.username}}</h1>
 <ul class="form-check">
-    {% for item in items %}
+    {% for task in items %}
         
-            {% if not item.done %}
+            {% if not task.done %}
             <li>
-                <form action="{% url 'todoapp:remove' item.id %}" method="post">      
-                    {% csrf_token %}      
-                    <!-- <input class="form-check-input" type="checkbox submit" name="item" id="item{{ forloop.counter }}" value="{{ item.id }}"> -->
-                    <input class="form-check-input" type="checkbox" id="item{{ forloop.counter }}"/>
+                <form action="{% url 'todoapp:remove' task.id %}" method="post">      
+                    {% csrf_token %}
+                    <input class="form-check-input" type="checkbox" id="task{{ forloop.counter }}"/>
                     <!-- <input type="submit" value="Delete"> -->
                 </form>
-                <label class="form-check-label" for="item{{ forloop.counter }}">{{ item.text }}</label>
+                <label class="form-check-label" for="task{{ forloop.counter }}" href= "{% url 'todoapp:detail' task{{ forloop.counter }} %}">{{ task.text }} Assigned by {{ task.assigner }} Deadline: {{task.deadline}}</label>
+
             </li>
             {% endif %}
         
     {% endfor %}
 
 </ul>
-<a href="{% url 'todoapp:detail' %}"><button>Add item</button></a>
+<a href="{% url 'todoapp:add' %}"><button>Add new task</button></a>
 {% endblock %}

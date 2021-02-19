@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<h1>Add item</h1>
-<form method="post">
-    {% csrf_token %}
-    <input name="new_item"/>
-</form>
-<a href="{% url 'todoapp:index' %}"><button>Return to list</button></a>
+<h1>Task detail</h1>
+    
+
 {% endblock %}
