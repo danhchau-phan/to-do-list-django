@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,9 +51,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-ROOT_URLCONF = 'todo.urls'
-
+ folders, such as Python .venv, are added to the files.watcherExclude setting (more d
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -102,10 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
+# Internationalization folders, such as Python .venv, are added to the files.watcherExclude setting (more d
 
 TIME_ZONE = 'UTC'
 
@@ -116,10 +112,10 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+# Static files (CSS, JavaScript, Images) folders, such as Python .venv, are added to the files.watcherExclude setting (more d
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/todoapp/index'
+
+django_heroku.settings(locals())
 
