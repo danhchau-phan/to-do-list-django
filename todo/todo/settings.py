@@ -70,6 +70,8 @@ TEMPLATES = [
     },
 ]
 
+ROOT_URLCONF = 'todo.urls'
+
 WSGI_APPLICATION = 'todo.wsgi.application'
 
 
@@ -111,8 +113,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
-
+USE_TZ = True 
 
 # Static files (CSS, JavaScript, Images) folders, such as Python .venv, are added to the files.watcherExclude setting (more d
 STATIC_URL = '/static/'
