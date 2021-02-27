@@ -30,7 +30,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['taskassignmentapp.herokuapp.com',
                  'localhost']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,6 +42,8 @@ INSTALLED_APPS = [
     'todoapp.apps.TodoappConfig',
     'accounts.apps.AccountsConfig',
 ]
+
+AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
