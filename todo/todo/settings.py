@@ -27,7 +27,8 @@ SECRET_KEY = 'sb!o^+h(ed1l@xi@_(4th67jr2e=oexa-(x!w7o4(2wy!w&s+6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['taskassignmentapp.herokuapp.com']
+ALLOWED_HOSTS = ['taskassignmentapp.herokuapp.com',
+                 'localhost']
 
 
 # Application definition
