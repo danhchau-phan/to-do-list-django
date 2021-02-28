@@ -5,7 +5,8 @@ app_name = 'todoapp'
 urlpatterns = [
     path('index/', views.index, name='index'),
     path('add/', views.add, name='add'),
-    # path('remove/<int:task_id>/', views.remove, name='remove'),
+    path('remove/<int:task_id>/', views.remove, name='remove'),
     path('manage/', views.manage, name='manage'),
+    path('updatestatus/', views.updatestatus, name='updatestatus'),
     # path('detail/<int:task_id>/', views.detail, name='detail')
 ]

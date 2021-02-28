@@ -3,6 +3,16 @@ from .models import Task
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 
+
+def updatestatus(request):
+    if request.method == "POST":
+        task_id = request.POST.get("task_id", None)
+        new_status = request.POST.get("new_status", None)
+        task = Task.objects.all().get(id=int(task_id))
+        setattr(task, 'status', new_status)
+        task.save()
+    return index(request)
+
 def index(request):
     try:
         tasks1 = Task.objects.filter(assignee = request.user)
@@ -22,12 +32,11 @@ def index(request):
     }
     return render(request, 'todoapp/index.html', context)
 
+# @method_decorator(require_POST)
 def remove(request, task_id):
+    # a task can only be removed by its assigner
     if request.method == "POST":
-        user = request.user
-        task = user.task_set.get(id=task_id)
-        # task.status = 
-        task.save()
+        task = Task.objects.filter(id=task_id).delete()
     return redirect('/todoapp/index/')
 
 def add(request):
@@ -35,7 +44,7 @@ def add(request):
         description = request.POST.get("new_task", None)
         deadline = request.POST.get("deadline", None)
         assignee = get_user_model().objects.get(username=request.POST.get("assignee", None))
-        new_item = Task(text=text, deadline=deadline, done=False, assignee=assignee, assigner=request.user, status='Not started')
+        new_item = Task(text=text, deadline=deadline, assignee=assignee, assigner=request.user)
         new_item.save()
 
     return render(request, 'todoapp/add.html', {'users': get_user_model().objects.all()})

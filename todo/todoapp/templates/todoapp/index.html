@@ -3,36 +3,95 @@
 <h1>Tasks of {{user.username}}</h1>
 <a href="#"><button>Manage group</button></a>
 <h3>Tasks assigned to {{user.username}}</h3>
-<ul class="form-check">
-    {% for task in tasks1 %}
-        <li>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Description</th>
+        <th scope="col">Assigned by</th>
+        <th scope="col">Deadline</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks1 %}
             {% if task.status != 'Done' %}
-            <!-- <form action="{% url 'todoapp:remove' task.id %}" method="post">      
-                {% csrf_token %} -->
-                <input class="form-check-input" type="checkbox" id="task{{ forloop.counter }}"/>
-                <!-- <input type="submit" value="Change status"> a dropdown menu, will fix later -->
-            <!-- </form> -->
-            <label class="form-check-label" for="task{{ forloop.counter }}">{{ task.description }} Assigned by {{ task.assigner }} Deadline: {{task.deadline}}</label>
+            <tr>
+                <td scope="row">{{ task.description }}</th>
+                <td>{{ task.assigner.username }}</td>
+                <td>{{ task.deadline }}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="taskStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ task.status}}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="taskStatus">
+                            {% for choice, _ in task.STATUS_CHOICES %}
+                                {% if choice == task.status %}
+                                    <a class="dropdown-item active" id = '{{task.id}}'>{{ choice }}</a>
+                                {% else %}
+                                    <a class="dropdown-item" id = '{{task.id}}'>{{ choice }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                      </div>
+                </td>
+            </tr>
             {% endif %}
-        </li>
-        
-    {% endfor %}
-</ul>
+        {% endfor %}
+    </tbody>
+</table>
+
 <a href="#"><button>View finished task</button></a>
 <h3>Tasks {{user.username}} assigned</h3>
-<ul class="form-check">
-    {% for task in tasks2 %}
-        <li>
-            <form action="{% url 'todoapp:remove' task.id %}" method="post">      
-                {% csrf_token %}
-                <input class="form-check-input" type="checkbox" id="task{{ forloop.counter }}"/>
-                <!-- <input type="submit" value="Delete"> -->
-            </form>
-            <label class="form-check-label" for="task{{ forloop.counter }}">{{ task.description }} Assigned by {{ task.assigner }} Deadline: {{task.deadline}}</label>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Description</th>
+        <th scope="col">Assigned to</th>
+        <th scope="col">Deadline</th>
+        <th scope="col">Status</th>
+        <th scope="col">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks2 %}
+        <form action="{% url 'todoapp:remove' task.id %}" method="post">      
+            {% csrf_token %}
+            <tr>
+                <td scope="row">{{ task.description }}</th>
+                <td>{{ task.assignee.username }}</td>
+                <td>{{ task.deadline }}</td>
+                <td>{{ task.status}}</td>
+                <td><input type="submit" value="Remove"/></td>
+            </tr>
+        </form>
+        {% endfor %}
+    </tbody>
+</table>
 
-        </li>
-        
-    {% endfor %}
-</ul>
 <a href="{% url 'todoapp:add' %}"><button>Add new task</button></a>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $('.dropdown-item').on('click', function() {
+            var task_id = $(this).attr('id');
+            var new_status = $(this).text();
+            
+            $.ajax({
+                type: 'POST',
+                url: "/todoapp/updatestatus/",
+                data: {
+                    "task_id": task_id,
+                    "new_status": new_status,
+                    "csrfmiddlewaretoken": '{{ csrf_token }}',
+                    "success": function() {
+                        $('#taskStatus').html(new_status);
+                    }
+                }
+                
+            })
+        })
+    </script>
 {% endblock %}
