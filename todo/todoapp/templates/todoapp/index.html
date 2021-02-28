@@ -1,23 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Tasks of {{user.username}}</h1>
+<a href="#"><button>Manage group</button></a>
+<h3>Tasks assigned to {{user.username}}</h3>
 <ul class="form-check">
-    {% for task in items %}
-        
-            {% if not task.done %}
-            <li>
-                <form action="{% url 'todoapp:remove' task.id %}" method="post">      
-                    {% csrf_token %}
-                    <input class="form-check-input" type="checkbox" id="task{{ forloop.counter }}"/>
-                    <!-- <input type="submit" value="Delete"> -->
-                </form>
-                <label class="form-check-label" for="task{{ forloop.counter }}">{{ task.text }} Assigned by {{ task.assigner }} Deadline: {{task.deadline}}</label>
-
-            </li>
+    {% for task in tasks1 %}
+        <li>
+            {% if task.status != 'Done' %}
+            <!-- <form action="{% url 'todoapp:remove' task.id %}" method="post">      
+                {% csrf_token %} -->
+                <input class="form-check-input" type="checkbox" id="task{{ forloop.counter }}"/>
+                <!-- <input type="submit" value="Change status"> a dropdown menu, will fix later -->
+            <!-- </form> -->
+            <label class="form-check-label" for="task{{ forloop.counter }}">{{ task.description }} Assigned by {{ task.assigner }} Deadline: {{task.deadline}}</label>
             {% endif %}
+        </li>
         
     {% endfor %}
+</ul>
+<a href="#"><button>View finished task</button></a>
+<h3>Tasks {{user.username}} assigned</h3>
+<ul class="form-check">
+    {% for task in tasks2 %}
+        <li>
+            <form action="{% url 'todoapp:remove' task.id %}" method="post">      
+                {% csrf_token %}
+                <input class="form-check-input" type="checkbox" id="task{{ forloop.counter }}"/>
+                <!-- <input type="submit" value="Delete"> -->
+            </form>
+            <label class="form-check-label" for="task{{ forloop.counter }}">{{ task.description }} Assigned by {{ task.assigner }} Deadline: {{task.deadline}}</label>
 
+        </li>
+        
+    {% endfor %}
 </ul>
 <a href="{% url 'todoapp:add' %}"><button>Add new task</button></a>
 {% endblock %}

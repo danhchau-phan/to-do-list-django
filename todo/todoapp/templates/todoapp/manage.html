@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Groups of {{user.username}}</h1>
+<h3>Current groups</h3>
+<ul>
+{% for gr in groups %}
+    <li>
+        {{ gr.groupname }}
+    </li>
+{% endfor %}
+</ul>
+
+<h3>Add group</h3>
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Available Groups
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {% for gr in remained_groups%}
+            <a class="dropdown-item" href="#">{{ gr.groupname }}</a>
+        {% endfor %}
+      <a class="dropdown-item" href="#">Create new group</a>
+    </div>
+  </div>
+<a href="{% url 'todoapp:index' %}"><button>My tasks</button></a>
+{% endblock %}

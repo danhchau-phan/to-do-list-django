@@ -12,7 +12,7 @@ class Task(models.Model):
 
     description = models.CharField(max_length=500)
     deadline = models.DateTimeField()
-    status = models.CharField(default='Not started', choices = STATUS_CHOICES)
+    status = models.CharField(max_length=500, default='Not started', choices = STATUS_CHOICES)
     assignee = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     assigner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="assigner")
 
